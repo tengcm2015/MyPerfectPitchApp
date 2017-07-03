@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">MyPerfectPitchApp</string>
+
+    <string name="back_top">トップに戻る</string>
+    <string name="back_mode">モード選択に戻る</string>
+
+    <string name="now_play">再生中</string>
+    <string name="close">閉じる</string>
+    <string name="correct">正解</string>
+    <string name="wrong">不正解</string>
+    <string name="next">次の問題</string>
+
+    <string name="difficulty">難易度</string>
+    <string name="difficulty_1">EASY</string>
+    <string name="difficulty_2">NORMAL</string>
+    <string name="difficulty_3">HARD</string>
+    <string name="difficulty_4">EXTREME</string>
+
+</resources>
