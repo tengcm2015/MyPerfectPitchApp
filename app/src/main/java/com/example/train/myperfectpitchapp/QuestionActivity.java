@@ -4,10 +4,15 @@ import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -21,6 +26,9 @@ import java.util.Arrays;
 
 public class QuestionActivity extends MainActivity implements View.OnClickListener{
 
+    //音
+    int[] soundIds = new int[12];
+    SoundPool soundPool;
     //入力値
     int[] inputted_key = new int[12];
     int[] buttons = new int[12];
@@ -64,6 +72,9 @@ public class QuestionActivity extends MainActivity implements View.OnClickListen
         pushedBackGround = defaultBackGround.getConstantState().newDrawable().mutate();
         pushedBackGround.setColorFilter(Color.CYAN, PorterDuff.Mode.SRC_OVER);
 
+        //音声ファイルの初期化
+        subfunc_question0_initsound();
+
         //再帰的に問題を出題・回答
         subfunc_question();
     }
@@ -73,6 +84,8 @@ public class QuestionActivity extends MainActivity implements View.OnClickListen
         switch (view.getId()){
             case R.id.button_question_1:
                 //難易度選択に戻る
+                soundPool.release();
+                soundPool = null;
                 finish();
                 break;
             case R.id.button_question_15:
@@ -95,6 +108,32 @@ public class QuestionActivity extends MainActivity implements View.OnClickListen
                 }
                 break;
         }
+    }
+
+    public void subfunc_question0_initsound(){
+        final int SOUND_POOL_MAX = 12;
+
+        AudioAttributes attr = new AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_MEDIA)
+                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                .build();
+
+        soundPool = new SoundPool.Builder()
+                .setAudioAttributes(attr)
+                .setMaxStreams(SOUND_POOL_MAX)
+                .build();
+        soundIds[0] = soundPool.load(this, R.raw.piano_0, 1);
+        soundIds[1] = soundPool.load(this, R.raw.piano_1, 1);
+        soundIds[2] = soundPool.load(this, R.raw.piano_2, 1);
+        soundIds[3] = soundPool.load(this, R.raw.piano_3, 1);
+        soundIds[4] = soundPool.load(this, R.raw.piano_4, 1);
+        soundIds[5] = soundPool.load(this, R.raw.piano_5, 1);
+        soundIds[6] = soundPool.load(this, R.raw.piano_6, 1);
+        soundIds[7] = soundPool.load(this, R.raw.piano_7, 1);
+        soundIds[8] = soundPool.load(this, R.raw.piano_8, 1);
+        soundIds[9] = soundPool.load(this, R.raw.piano_9, 1);
+        soundIds[10] = soundPool.load(this, R.raw.piano_10, 1);
+        soundIds[11] = soundPool.load(this, R.raw.piano_11, 1);
     }
 
     public void subfunc_question(){
@@ -135,8 +174,8 @@ public class QuestionActivity extends MainActivity implements View.OnClickListen
 
     public void subfunc_question2(){
         //ログ出力
-        TextView levelText = (TextView)findViewById(R.id.textView_question_2);
-        levelText.setText("入力値 : " + Arrays.toString(inputted_key));
+        //TextView levelText = (TextView)findViewById(R.id.textView_question_2);
+        //levelText.setText("入力値 : " + Arrays.toString(inputted_key));
 
         //正解不正解の判定・結果ダイアログを出す
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -162,6 +201,8 @@ public class QuestionActivity extends MainActivity implements View.OnClickListen
                 }else{
                     dialog2.dismiss();
                     //結果へ
+                    soundPool.release();
+                    soundPool = null;
                     Intent intent = new Intent(getApplication(),ResultActivity.class);
                     intent.putExtra("result",result);
                     startActivity(intent);
@@ -178,9 +219,16 @@ public class QuestionActivity extends MainActivity implements View.OnClickListen
     public int[] subfunc_question3_makesound(){
         // C D E F G A B C# D# F# G# A#の順
         int[] result = new int[12];
+
+        // 音を決定
         Arrays.fill(result,0);
-        //なんかの基準で1を付ける
+        result[0] = result[2] = result[4] = 1;
+
         //音を鳴らす
+        for(int i = 0; i < 12; i++){
+            if(result[i] == 1)
+                soundPool.play(soundIds[i],1.0f,1.0f,0,0,1.0f);
+        }
         return result;
     }
 }
