@@ -2,6 +2,7 @@ package com.example.train.myperfectpitchapp;
 
 import android.app.AlertDialog;
 import android.app.DialogFragment;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -21,6 +22,8 @@ import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Random;
 
+import static java.sql.Types.NULL;
+
 /**
  * Created by train on 2017/06/30.
  */
@@ -29,6 +32,9 @@ public class QuestionActivity extends MainActivity implements View.OnClickListen
 
     //レベル
     int level = 0;
+    //処理待ち
+    boolean load_check = false;
+    ProgressDialog progressDialog;
     //音
     int[] soundIds = new int[12];
     SoundPool soundPool;
@@ -88,6 +94,7 @@ public class QuestionActivity extends MainActivity implements View.OnClickListen
         switch (view.getId()){
             case R.id.button_question_1:
                 //難易度選択に戻る
+                load_check = false;
                 soundPool.release();
                 soundPool = null;
                 finish();
@@ -121,6 +128,13 @@ public class QuestionActivity extends MainActivity implements View.OnClickListen
     public void subfunc_question0_initsound(){
         final int SOUND_POOL_MAX = 12;
 
+        //プログレスダイアログを出す
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setMessage("ロード中");
+        progressDialog.setCancelable(true);
+        progressDialog.show();
+
         AudioAttributes attr = new AudioAttributes.Builder()
                 .setUsage(AudioAttributes.USAGE_MEDIA)
                 .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
@@ -149,12 +163,6 @@ public class QuestionActivity extends MainActivity implements View.OnClickListen
         //キーボードの値リセット
         Arrays.fill(inputted_key,0);
 
-        //ダイアログを出す
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(R.string.now_play)
-                .setPositiveButton(R.string.close, null);
-        AlertDialog dialog = builder.show();
-
         //音を決める
         Random rnd = new Random();
         Arrays.fill(ans,0);
@@ -164,16 +172,6 @@ public class QuestionActivity extends MainActivity implements View.OnClickListen
 
         //音を出す
         subfunc_question3_makesound();
-
-        //ダイアログを閉じる
-        Button button = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //閉じられてなかったらダイアログを閉じる
-                dialog.dismiss();
-            }
-        });
 
         //入力する
         for(int i = 0; i < 12; i++){
@@ -230,6 +228,7 @@ public class QuestionActivity extends MainActivity implements View.OnClickListen
                 }else{
                     dialog2.dismiss();
                     //結果へ
+                    load_check = false;
                     soundPool.release();
                     soundPool = null;
                     Intent intent = new Intent(getApplication(),ResultActivity.class);
@@ -248,11 +247,54 @@ public class QuestionActivity extends MainActivity implements View.OnClickListen
     public void subfunc_question3_makesound(){
         // C D E F G A B C# D# F# G# A#の順
 
-        //音を鳴らす
-        for(int i = 0; i < 12; i++){
-            if(ans[i] == 1)
-                soundPool.play(soundIds[i],1.0f,1.0f,0,0,1.0f);
+        //ロードを待つ
+        if(load_check == true){
+            //音を鳴らす
+            subfunc_question4_makeplayingdialog();
+            for(int j = 0; j < 12; j++){
+                if(ans[j] == 1){
+                    soundPool.play(soundIds[j],1.0f,1.0f,0,0,1.0f);
+                    j = j;
+                }
+            }
+            return;
+        }
+        else {
+            soundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+                @Override
+                public void onLoadComplete(SoundPool soundPool, int i, int i1) {
+                    if(i == soundIds[11]){
+                        load_check = true;
+                        progressDialog.dismiss();
+                        subfunc_question4_makeplayingdialog();
+                        for(int j = 0; j < 12; j++){
+                            if(ans[j] == 1){
+                                soundPool.play(soundIds[j],1.0f,1.0f,0,0,1.0f);
+                            }
+                        }
+                    }
+                }
+            });
         }
         return;
+    }
+
+    public void subfunc_question4_makeplayingdialog(){
+        AlertDialog.Builder builder;
+        AlertDialog dialog;
+        //ダイアログを出す
+        builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.now_play)
+                .setPositiveButton(R.string.close, null);
+        dialog = builder.show();
+        //ダイアログを閉じる
+        Button button = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //閉じられてなかったらダイアログを閉じる
+                dialog.dismiss();
+            }
+        });
     }
 }
