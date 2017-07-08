@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.Random;
 
 /**
  * Created by train on 2017/06/30.
@@ -26,9 +27,12 @@ import java.util.Arrays;
 
 public class QuestionActivity extends MainActivity implements View.OnClickListener{
 
+    //レベル
+    int level = 0;
     //音
     int[] soundIds = new int[12];
     SoundPool soundPool;
+    String[] soundname = {"C","D","E","F","G","A","B","C#","D#","F#","G#","A#"};
     //入力値
     int[] inputted_key = new int[12];
     int[] buttons = new int[12];
@@ -50,7 +54,7 @@ public class QuestionActivity extends MainActivity implements View.OnClickListen
 
         //レベル取得
         Intent intent = getIntent();
-        int level = intent.getIntExtra("level", 0);
+        level = intent.getIntExtra("level", 0);
         //問題数取得
         int tmp = 5;
         question = tmp;
@@ -87,6 +91,10 @@ public class QuestionActivity extends MainActivity implements View.OnClickListen
                 soundPool.release();
                 soundPool = null;
                 finish();
+                break;
+            case R.id.button_question_16:
+                //再度再生
+                subfunc_question3_makesound();
                 break;
             case R.id.button_question_15:
                 //入力音決定
@@ -147,8 +155,15 @@ public class QuestionActivity extends MainActivity implements View.OnClickListen
                 .setPositiveButton(R.string.close, null);
         AlertDialog dialog = builder.show();
 
+        //音を決める
+        Random rnd = new Random();
+        Arrays.fill(ans,0);
+        for(int i = 0; i < level; i++){
+            ans[rnd.nextInt(12)] = 1;
+        }
+
         //音を出す
-        ans = subfunc_question3_makesound();
+        subfunc_question3_makesound();
 
         //ダイアログを閉じる
         Button button = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
@@ -167,6 +182,10 @@ public class QuestionActivity extends MainActivity implements View.OnClickListen
             tmp_button.setOnClickListener(this);
         }
 
+        //再度再生する
+        Button button_again = (Button)findViewById(R.id.button_question_16);
+        button_again.setOnClickListener(this);
+
         //決定する
         Button button_deside = (Button)findViewById(R.id.button_question_15);
         button_deside.setOnClickListener(this);
@@ -177,14 +196,24 @@ public class QuestionActivity extends MainActivity implements View.OnClickListen
         //TextView levelText = (TextView)findViewById(R.id.textView_question_2);
         //levelText.setText("入力値 : " + Arrays.toString(inputted_key));
 
+        //正解の音の文字列生成
+        String ans_str = "";
+        for(int i = 0; i < 12; i++){
+            if(ans[i] == 1){
+                ans_str = ans_str + " " + soundname[i];
+            }
+        }
+
         //正解不正解の判定・結果ダイアログを出す
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         if(Arrays.equals(ans,inputted_key)){
             result[2] += 1;
-            builder.setMessage(R.string.correct)
+            builder.setTitle(R.string.correct)
+                    .setMessage("正解 :" + ans_str)
                     .setPositiveButton(R.string.next, null);
         }else{
-            builder.setMessage(R.string.wrong)
+            builder.setTitle(R.string.wrong)
+                    .setMessage("正解 :" + ans_str)
                     .setPositiveButton(R.string.next, null);
         }
         AlertDialog dialog2 = builder.show();
@@ -216,19 +245,14 @@ public class QuestionActivity extends MainActivity implements View.OnClickListen
         }
     }
 
-    public int[] subfunc_question3_makesound(){
+    public void subfunc_question3_makesound(){
         // C D E F G A B C# D# F# G# A#の順
-        int[] result = new int[12];
-
-        // 音を決定
-        Arrays.fill(result,0);
-        result[0] = result[2] = result[4] = 1;
 
         //音を鳴らす
         for(int i = 0; i < 12; i++){
-            if(result[i] == 1)
+            if(ans[i] == 1)
                 soundPool.play(soundIds[i],1.0f,1.0f,0,0,1.0f);
         }
-        return result;
+        return;
     }
 }
