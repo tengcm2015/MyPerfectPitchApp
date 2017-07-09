@@ -16,4 +16,34 @@
     <string name="difficulty_3">HARD</string>
     <string name="difficulty_4">EXTREME</string>
 
+    <string-array name="default_soundNames">
+        <item>C</item>
+        <item>Cs</item>
+        <item>D</item>
+        <item>Ds</item>
+        <item>E</item>
+        <item>F</item>
+        <item>Fs</item>
+        <item>G</item>
+        <item>Gs</item>
+        <item>A</item>
+        <item>As</item>
+        <item>B</item>
+    </string-array>
+
+    <string-array name="english_soundNames">
+        <item>C</item>
+        <item>C#</item>
+        <item>D</item>
+        <item>D#</item>
+        <item>E</item>
+        <item>F</item>
+        <item>F#</item>
+        <item>G</item>
+        <item>G#</item>
+        <item>A</item>
+        <item>A#</item>
+        <item>B</item>
+    </string-array>
+
 </resources>

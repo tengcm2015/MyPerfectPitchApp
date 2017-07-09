@@ -1,28 +1,21 @@
 package com.example.train.myperfectpitchapp;
 
 import android.app.AlertDialog;
-import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.media.AudioAttributes;
-import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Random;
-
-import static java.sql.Types.NULL;
 
 /**
  * Created by train on 2017/06/30.
@@ -38,7 +31,8 @@ public class QuestionActivity extends MainActivity implements View.OnClickListen
     //音
     int[] soundIds = new int[12];
     SoundPool soundPool;
-    String[] soundname = {"C","D","E","F","G","A","B","C#","D#","F#","G#","A#"};
+    String[] soundname;
+    String[] english_soundname;
     //入力値
     int[] inputted_key = new int[12];
     int[] buttons = new int[12];
@@ -61,6 +55,9 @@ public class QuestionActivity extends MainActivity implements View.OnClickListen
         //レベル取得
         Intent intent = getIntent();
         level = intent.getIntExtra("level", 0);
+        //文字列取得
+        soundname = getResources().getStringArray(R.array.default_soundNames);
+        english_soundname = getResources().getStringArray(R.array.english_soundNames);
         //問題数取得
         int tmp = 5;
         question = tmp;
@@ -99,11 +96,11 @@ public class QuestionActivity extends MainActivity implements View.OnClickListen
                 soundPool = null;
                 finish();
                 break;
-            case R.id.button_question_16:
+            case R.id.button_question_again:
                 //再度再生
                 subfunc_question3_makesound();
                 break;
-            case R.id.button_question_15:
+            case R.id.button_question_decide:
                 //入力音決定
                 subfunc_question2();
                 break;
@@ -144,18 +141,18 @@ public class QuestionActivity extends MainActivity implements View.OnClickListen
                 .setAudioAttributes(attr)
                 .setMaxStreams(SOUND_POOL_MAX)
                 .build();
-        soundIds[0] = soundPool.load(this, R.raw.piano_0, 1);
-        soundIds[1] = soundPool.load(this, R.raw.piano_1, 1);
-        soundIds[2] = soundPool.load(this, R.raw.piano_2, 1);
-        soundIds[3] = soundPool.load(this, R.raw.piano_3, 1);
-        soundIds[4] = soundPool.load(this, R.raw.piano_4, 1);
-        soundIds[5] = soundPool.load(this, R.raw.piano_5, 1);
-        soundIds[6] = soundPool.load(this, R.raw.piano_6, 1);
-        soundIds[7] = soundPool.load(this, R.raw.piano_7, 1);
-        soundIds[8] = soundPool.load(this, R.raw.piano_8, 1);
-        soundIds[9] = soundPool.load(this, R.raw.piano_9, 1);
-        soundIds[10] = soundPool.load(this, R.raw.piano_10, 1);
-        soundIds[11] = soundPool.load(this, R.raw.piano_11, 1);
+        soundIds[0] = soundPool.load(this, R.raw.piano_c, 1);
+        soundIds[1] = soundPool.load(this, R.raw.piano_cs, 1);
+        soundIds[2] = soundPool.load(this, R.raw.piano_d, 1);
+        soundIds[3] = soundPool.load(this, R.raw.piano_ds, 1);
+        soundIds[4] = soundPool.load(this, R.raw.piano_e, 1);
+        soundIds[5] = soundPool.load(this, R.raw.piano_f, 1);
+        soundIds[6] = soundPool.load(this, R.raw.piano_fs, 1);
+        soundIds[7] = soundPool.load(this, R.raw.piano_g, 1);
+        soundIds[8] = soundPool.load(this, R.raw.piano_gs, 1);
+        soundIds[9] = soundPool.load(this, R.raw.piano_a, 1);
+        soundIds[10] = soundPool.load(this, R.raw.piano_as, 1);
+        soundIds[11] = soundPool.load(this, R.raw.piano_b, 1);
     }
 
     public void subfunc_question(){
@@ -175,17 +172,17 @@ public class QuestionActivity extends MainActivity implements View.OnClickListen
 
         //入力する
         for(int i = 0; i < 12; i++){
-            buttons[i] = getResources().getIdentifier("button_question_" + (i+3), "id", getPackageName());
+            buttons[i] = getResources().getIdentifier("button_question_" + soundname[i], "id", getPackageName());
             Button tmp_button = (Button)findViewById(buttons[i]);
             tmp_button.setOnClickListener(this);
         }
 
         //再度再生する
-        Button button_again = (Button)findViewById(R.id.button_question_16);
+        Button button_again = (Button)findViewById(R.id.button_question_again);
         button_again.setOnClickListener(this);
 
         //決定する
-        Button button_deside = (Button)findViewById(R.id.button_question_15);
+        Button button_deside = (Button)findViewById(R.id.button_question_decide);
         button_deside.setOnClickListener(this);
     }
 
@@ -198,7 +195,7 @@ public class QuestionActivity extends MainActivity implements View.OnClickListen
         String ans_str = "";
         for(int i = 0; i < 12; i++){
             if(ans[i] == 1){
-                ans_str = ans_str + " " + soundname[i];
+                ans_str = ans_str + " " + english_soundname[i];
             }
         }
 
