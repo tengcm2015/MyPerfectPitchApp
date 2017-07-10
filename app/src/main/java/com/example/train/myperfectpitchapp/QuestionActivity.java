@@ -29,6 +29,7 @@ public class QuestionActivity extends MainActivity implements View.OnClickListen
     boolean load_check = false;
     ProgressDialog progressDialog;
     //音
+    int SOUND_POOL_MAX = 12;
     int[] soundIds = new int[12];
     SoundPool soundPool;
     String[] soundname;
@@ -123,7 +124,6 @@ public class QuestionActivity extends MainActivity implements View.OnClickListen
     }
 
     public void subfunc_question0_initsound(){
-        final int SOUND_POOL_MAX = 12;
 
         //プログレスダイアログを出す
         progressDialog = new ProgressDialog(this);
