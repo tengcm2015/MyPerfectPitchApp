@@ -16,6 +16,13 @@
     <string name="difficulty_3">HARD</string>
     <string name="difficulty_4">EXTREME</string>
 
+    <string-array name="language">
+        <item>English</item>
+        <item>Germany</item>
+        <item>Italian</item>
+        <item>None</item>
+    </string-array>
+
     <string-array name="default_soundNames">
         <item>C</item>
         <item>Cs</item>
@@ -31,7 +38,7 @@
         <item>B</item>
     </string-array>
 
-    <string-array name="english_soundNames">
+    <string-array name="English_soundNames">
         <item>C</item>
         <item>C#</item>
         <item>D</item>
@@ -44,6 +51,51 @@
         <item>A</item>
         <item>A#</item>
         <item>B</item>
+    </string-array>
+
+    <string-array name="Germany_soundNames">
+        <item>C</item>
+        <item>Cis</item>
+        <item>D</item>
+        <item>Dis</item>
+        <item>E</item>
+        <item>F</item>
+        <item>Fis</item>
+        <item>G</item>
+        <item>Gis</item>
+        <item>A</item>
+        <item>Ais</item>
+        <item>H</item>
+    </string-array>
+
+    <string-array name="Italian_soundNames">
+        <item>ﾄﾞ</item>
+        <item>ﾄﾞ#</item>
+        <item>ﾚ</item>
+        <item>ﾚ#</item>
+        <item>ﾐ</item>
+        <item>ﾌｧ</item>
+        <item>ﾌｧ#</item>
+        <item>ｿ</item>
+        <item>ｿ#</item>
+        <item>ﾗ</item>
+        <item>ﾗ#</item>
+        <item>ｼ</item>
+    </string-array>
+
+    <string-array name="None_soundNames">
+        <item> </item>
+        <item> </item>
+        <item> </item>
+        <item> </item>
+        <item> </item>
+        <item> </item>
+        <item> </item>
+        <item> </item>
+        <item> </item>
+        <item> </item>
+        <item> </item>
+        <item> </item>
     </string-array>
 
 </resources>

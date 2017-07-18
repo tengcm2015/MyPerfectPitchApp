@@ -23,6 +23,8 @@ import java.util.Random;
 
 public class QuestionActivity extends MainActivity implements View.OnClickListener{
 
+    //グローバル変数用
+    UtilCommon common;
     //レベル
     int level = 0;
     //処理待ち
@@ -33,7 +35,7 @@ public class QuestionActivity extends MainActivity implements View.OnClickListen
     int[] soundIds = new int[12];
     SoundPool soundPool;
     String[] soundname;
-    String[] english_soundname;
+    String[] set_soundname;
     //入力値
     int[] inputted_key = new int[12];
     int[] buttons = new int[12];
@@ -53,19 +55,27 @@ public class QuestionActivity extends MainActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
 
+        //グローバル変数用
+        common = (UtilCommon)getApplication();
+        int[] tmp_mode = common.getGlobal();
+
         //レベル取得
         Intent intent = getIntent();
         level = intent.getIntExtra("level", 0);
-        //文字列取得
-        soundname = getResources().getStringArray(R.array.default_soundNames);
-        english_soundname = getResources().getStringArray(R.array.english_soundNames);
+
         //問題数取得
         int tmp = 5;
         question = tmp;
+
         //結果変数初期化
         Arrays.fill(result,0);
         result[0] = level;
         result[1] = question;
+
+        //文字列取得
+        String[] Language = getResources().getStringArray(R.array.language);
+        soundname = getResources().getStringArray(R.array.default_soundNames);
+        set_soundname = getResources().getStringArray(getResources().getIdentifier(Language[tmp_mode[1]] + "_soundNames","array", getPackageName()));
 
         //レベル表示
         TextView levelText = (TextView)findViewById(R.id.textView_question_1);
@@ -174,6 +184,8 @@ public class QuestionActivity extends MainActivity implements View.OnClickListen
         for(int i = 0; i < 12; i++){
             buttons[i] = getResources().getIdentifier("button_question_" + soundname[i], "id", getPackageName());
             Button tmp_button = (Button)findViewById(buttons[i]);
+            tmp_button.setText(set_soundname[i]);
+            tmp_button.setAllCaps(false);
             tmp_button.setOnClickListener(this);
         }
 
@@ -195,7 +207,7 @@ public class QuestionActivity extends MainActivity implements View.OnClickListen
         String ans_str = "";
         for(int i = 0; i < 12; i++){
             if(ans[i] == 1){
-                ans_str = ans_str + " " + english_soundname[i];
+                ans_str = ans_str + " " + set_soundname[i];
             }
         }
 
