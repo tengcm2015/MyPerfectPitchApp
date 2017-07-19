@@ -4,26 +4,26 @@
     android:layout_height="match_parent">
 
     <Button
-        android:text="タイムアタック"
+        android:id="@+id/button_challenge_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/button_level_1" />
+        android:text="タイムアタック" />
 
     <Button
-        android:text="トライアル"
+        android:id="@+id/button_challenge_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/button_level_2" />
+        android:text="トライアル" />
 
     <Button
-        android:text="@string/back_mode"
+        android:id="@+id/button_challenge_5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/button_level_5" />
+        android:text="@string/back_mode" />
 
     <Button
-        android:text="@string/back_top"
+        android:id="@+id/button_challenge_6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/button_level_6" />
+        android:text="@string/back_top" />
 </LinearLayout>

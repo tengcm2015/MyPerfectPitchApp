@@ -15,35 +15,33 @@ public class SelectChallengeActivity extends MainActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selectchallenge);
 
-        Button levelButton1 = (Button)findViewById(R.id.button_level_1);
-        Button levelButton2 = (Button)findViewById(R.id.button_level_2);
-        Button returnButton1 = (Button)findViewById(R.id.button_level_5);
-        Button returnButton2 = (Button)findViewById(R.id.button_level_6);
-        levelButton1.setOnClickListener(this);
-        levelButton2.setOnClickListener(this);
+        Button challengeButton1 = (Button)findViewById(R.id.button_challenge_1);
+        Button challengeButton2 = (Button)findViewById(R.id.button_challenge_2);
+        Button returnButton1 = (Button)findViewById(R.id.button_challenge_5);
+        Button returnButton2 = (Button)findViewById(R.id.button_challenge_6);
+        challengeButton1.setOnClickListener(this);
+        challengeButton2.setOnClickListener(this);
         returnButton1.setOnClickListener(this);
         returnButton2.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view){
-        int level = 5;
+        int challenge = 3;
         Intent intent;
         switch (view.getId()){
-            case R.id.button_level_1:
-                level -= 1;
-            case R.id.button_level_2:
-                level -= 1;
-                /**************************************************************
-                intent = new Intent(getApplication(),QuestionActivity.class);
-                intent.putExtra("level",level);
+            case R.id.button_challenge_1:
+                challenge -= 1;
+            case R.id.button_challenge_2:
+                challenge -= 1;
+                intent = new Intent(getApplication(),ChallengeActivity.class);
+                intent.putExtra("challenge",challenge);
                 startActivity(intent);
-                **************************************************************/
                 break;
-            case R.id.button_level_5:
+            case R.id.button_challenge_5:
                 finish();
                 break;
-            case R.id.button_level_6:
+            case R.id.button_challenge_6:
                 intent = new Intent(getApplication(),MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
