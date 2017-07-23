@@ -27,7 +27,7 @@ public class SelectChallengeActivity extends MainActivity implements View.OnClic
 
     @Override
     public void onClick(View view){
-        int challenge = 3;
+        int challenge = 7;
         Intent intent;
         switch (view.getId()){
             case R.id.button_challenge_1:

@@ -257,7 +257,7 @@ public class QuestionActivity extends MainActivity implements View.OnClickListen
         // C D E F G A B C# D# F# G# A#の順
 
         //ロードを待つ
-        if(load_check == true){
+        if(load_check){
             //音を鳴らす
             subfunc_question4_makeplayingdialog();
             for(int j = 0; j < 12; j++){
@@ -266,7 +266,6 @@ public class QuestionActivity extends MainActivity implements View.OnClickListen
                     j = j;
                 }
             }
-            return;
         }
         else {
             soundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
@@ -285,7 +284,6 @@ public class QuestionActivity extends MainActivity implements View.OnClickListen
                 }
             });
         }
-        return;
     }
 
     public void subfunc_question4_makeplayingdialog(){

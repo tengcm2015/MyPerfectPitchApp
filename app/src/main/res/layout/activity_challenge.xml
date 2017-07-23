@@ -11,6 +11,14 @@
         android:layout_alignParentBottom="true"
         android:text="難易度選択に戻る" />
 
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView_challenge_1"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,38 +33,38 @@
             android:layout_weight="1">
 
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/girl_sleep"
                 android:scaleType="centerInside"
+                android:id="@+id/image_challenge_1"
                 android:layout_weight="1"/>
 
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/girl_sleep"
                 android:scaleType="centerInside"
+                android:id="@+id/image_challenge_2"
                 android:layout_weight="1"/>
 
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/girl_sleep"
                 android:scaleType="centerInside"
+                android:id="@+id/image_challenge_3"
                 android:layout_weight="1"/>
 
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/girl_sleep"
                 android:scaleType="centerInside"
+                android:id="@+id/image_challenge_4"
                 android:layout_weight="1"/>
 
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/girl_sleep"
                 android:scaleType="centerInside"
+                android:id="@+id/image_challenge_5"
                 android:layout_weight="1"/>
 
         </LinearLayout>
