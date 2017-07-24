@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.beardedhen.androidbootstrap.BootstrapButton;
+import com.beardedhen.androidbootstrap.TypefaceProvider;
+
 /**
  * Created by train on 2017/06/30.
  */
@@ -14,6 +17,7 @@ public class SelectModeActivity extends MainActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        TypefaceProvider.registerDefaultIconSets();
         setContentView(R.layout.activity_selectmode);
 
         Button trainButton = (Button)findViewById(R.id.button_mode_1);
@@ -25,7 +29,8 @@ public class SelectModeActivity extends MainActivity implements View.OnClickList
         Button returnButton = (Button)findViewById(R.id.button_mode_4);
         returnButton.setOnClickListener(this);
 
-        Button settingButton = (Button)findViewById(R.id.button_mode_5);
+        BootstrapButton settingButton = (BootstrapButton) findViewById(R.id.button_mode_5);
+        settingButton.setTextSize(30);
         settingButton.setOnClickListener(this);
     }
 

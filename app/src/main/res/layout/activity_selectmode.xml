@@ -1,49 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:bootstrap="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="1">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:orientation="vertical"
-        android:layout_above="@+id/button_mode_5">
+        android:orientation="vertical">
 
         <Button
             android:text="トレーニング"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:id="@+id/button_mode_1"
             android:layout_gravity="center"
-            android:layout_weight="1"/>
+            android:layout_weight="3"/>
 
         <Button
             android:text="力試し"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:id="@+id/button_mode_2"
-            android:layout_weight="1"
+            android:layout_weight="3"
             android:layout_gravity="center" />
 
         <Button
             android:text="友達と対決"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:id="@+id/button_mode_3"
-            android:layout_weight="1"
+            android:layout_weight="3"
             android:layout_gravity="center" />
 
         <Button
             android:text="トップに戻る"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:id="@+id/button_mode_4"
-            android:layout_weight="1"
+            android:layout_weight="3"
             android:layout_gravity="center" />
+
+        <com.beardedhen.androidbootstrap.BootstrapButton
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="right"
+            android:id="@+id/button_mode_5"
+            bootstrap:bootstrapBrand="info"
+            bootstrap:bootstrapText="{fa-gear}"
+            />
     </LinearLayout>
 
+
+
+
+
+    <!--
     <Button
         android:id="@+id/button_mode_5"
         android:layout_width="wrap_content"
@@ -51,5 +67,5 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:text="設定" />
-
+    -->
 </RelativeLayout>
