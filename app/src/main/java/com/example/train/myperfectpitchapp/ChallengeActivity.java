@@ -46,7 +46,7 @@ public class ChallengeActivity extends MainActivity implements View.OnClickListe
     int waitcount = 5;
     //問題数
     int now_num = 0;
-    int question = 20;
+    int question;
     //結果
     int[] result = new int[3];
     //背景
@@ -77,7 +77,7 @@ public class ChallengeActivity extends MainActivity implements View.OnClickListe
         //結果変数初期化
         Arrays.fill(result,0);
         result[0] = challenge;
-        result[1] = question;
+        result[1] = question * 10;//最大ポイント = 問題数 * 10
 
         //文字列取得
         String[] Language = getResources().getStringArray(R.array.language);
@@ -106,6 +106,7 @@ public class ChallengeActivity extends MainActivity implements View.OnClickListe
         switch (view.getId()){
             case R.id.button_challenge_back:
                 //難易度選択に戻る
+                mHandler.removeCallbacks(updatePicAndSound);
                 load_check = false;
                 soundPool.release();
                 soundPool = null;
@@ -183,8 +184,10 @@ public class ChallengeActivity extends MainActivity implements View.OnClickListe
         //Arrays.fill(inputted_key,0);
 
         //出力画面占有状況値リセット
-        for(int i = 0; i < outputted_pic.length; i++)
-            Arrays.fill(outputted_pic[i],0);
+        for(int i = 0; i < outputted_pic.length; i++){
+            Arrays.fill(outputted_pic[i],-1);
+            outputted_pic[i][0] = 0;
+        }
 
         //入力キーボーボタン初期化
         for(int i = 0; i < 12; i++){
@@ -202,7 +205,7 @@ public class ChallengeActivity extends MainActivity implements View.OnClickListe
             public void run() {
                 //全マスが埋まっていないかチェック
                 ArrayList<Integer> check = subfunc_challenge2_check();
-                if(check.size() > 0){
+                if(check.size() != 5){
                     //埋まっていない・一定時間経過で音追加
                     subfunc_challenge3_makesound(check);
                     now_num += 1;
@@ -210,7 +213,7 @@ public class ChallengeActivity extends MainActivity implements View.OnClickListe
                 //埋まっているマスが一定時間経過でマス封印
                 subfunc_challenge4_timepass();
                 //全マスが埋まる・全マス封印で終了
-                if(subfunc_challenge5_fincheck() || now_num == question){
+                if(subfunc_challenge5_fincheck() || (now_num == question)){
                     //終了
                     mHandler.removeCallbacks(updatePicAndSound);
                     load_check = false;
@@ -234,13 +237,8 @@ public class ChallengeActivity extends MainActivity implements View.OnClickListe
         for(int i = 0; i < outputted_pic.length; i++){
             if(outputted_pic[i][0] == 1){
                 //表示されている
+                array.add(outputted_pic[i][1]);
                 outputted_pic[i][2] += 1;
-            }else if(outputted_pic[i][0] < 0){
-                //止められてる
-                continue;
-            }else{
-                //表示されていない
-                array.add(i);
             }
         }
         return array;
@@ -253,7 +251,7 @@ public class ChallengeActivity extends MainActivity implements View.OnClickListe
         //場所を決める
         do {
             pic_tmpnum = rnd.nextInt(5);
-        }while (outputted_pic[pic_tmpnum][0] == 1);
+        }while (outputted_pic[pic_tmpnum][0] != 0);
         //音を決める
         do {
             sound_tmpnum = rnd.nextInt(12);
@@ -273,19 +271,20 @@ public class ChallengeActivity extends MainActivity implements View.OnClickListe
         for(int i = 0; i < outputted_pic.length; i++){
             if(outputted_pic[i][2] > waitcount){
                 //正しい音が入力されなかった
-                outputted_pic[i][2] = -1;
                 //画面反映
                 ImageView imageView = (ImageView)findViewById(getResources().getIdentifier("image_challenge_" + Integer.toString(i+1), "id", getPackageName()));
                 imageView.setImageResource(R.drawable.girl_ng);
                 //音を止める
                 soundPool.stop(outputted_pic[i][3]);
+                //配列初期化
+                Arrays.fill(outputted_pic[i],-1);
             }
         }
     }
 
     public boolean subfunc_challenge5_fincheck(){
         for(int i = 0; i < outputted_pic.length; i++){
-            if(outputted_pic[i][2] != -1){
+            if(outputted_pic[i][0] != -1){
                 //まだマスが閉じられていない
                 return false;
             }
@@ -305,7 +304,8 @@ public class ChallengeActivity extends MainActivity implements View.OnClickListe
                 //音を止める
                 soundPool.stop(outputted_pic[i][3]);
                 //配列初期化
-                Arrays.fill(outputted_pic[i],0);
+                Arrays.fill(outputted_pic[i],-1);
+                outputted_pic[i][0] = 0;
             }
         }
     }

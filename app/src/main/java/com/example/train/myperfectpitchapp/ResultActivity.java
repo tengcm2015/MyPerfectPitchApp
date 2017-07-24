@@ -29,6 +29,13 @@ public class ResultActivity extends MainActivity implements View.OnClickListener
         textView = (TextView)findViewById(R.id.textView_result_2);
         textView.setText(String.valueOf(result[2]) + " / " + String.valueOf(result[1]));
 
+        //コメント配置
+        String[] comment = getResources().getStringArray(R.array.result_comment);
+        int comment_num = (int)(((float)result[2] / (float)result[1]) * (float)(comment.length - 1));
+        textView = (TextView)findViewById(R.id.textView_result_3);
+        textView.setText(comment[comment_num]);
+
+        //ボタンonClick用
         Button returnButton1 = (Button)findViewById(R.id.button_result_1);
         returnButton1.setOnClickListener(this);
     }

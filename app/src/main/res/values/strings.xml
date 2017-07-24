@@ -18,6 +18,14 @@
     <string name="difficulty_5">TimeAtack</string>
     <string name="difficulty_6">Trial</string>
 
+    <string-array name="result_comment">
+        <item>これからだ！頑張ろう！</item>
+        <item>徐々にやっていければ大丈夫！</item>
+        <item>お疲れ様でした</item>
+        <item>惜しい！でもよく出来ました！</item>
+        <item>大変よくできました！</item>
+    </string-array>
+
     <string-array name="language">
         <item>English</item>
         <item>Germany</item>
