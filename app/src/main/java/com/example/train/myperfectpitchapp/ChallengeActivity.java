@@ -106,10 +106,7 @@ public class ChallengeActivity extends MainActivity implements View.OnClickListe
         switch (view.getId()){
             case R.id.button_challenge_back:
                 //難易度選択に戻る
-                mHandler.removeCallbacks(updatePicAndSound);
-                load_check = false;
-                soundPool.release();
-                soundPool = null;
+                subfunc_challenge7_finActivity();
                 finish();
                 break;
                 default:
@@ -215,10 +212,7 @@ public class ChallengeActivity extends MainActivity implements View.OnClickListe
                 //全マスが埋まる・全マス封印で終了
                 if(subfunc_challenge5_fincheck() || (now_num == question)){
                     //終了
-                    mHandler.removeCallbacks(updatePicAndSound);
-                    load_check = false;
-                    soundPool.release();
-                    soundPool = null;
+                    subfunc_challenge7_finActivity();
                     Intent intent = new Intent(getApplication(),ResultActivity.class);
                     intent.putExtra("result",result);
                     startActivity(intent);
@@ -308,5 +302,17 @@ public class ChallengeActivity extends MainActivity implements View.OnClickListe
                 outputted_pic[i][0] = 0;
             }
         }
+    }
+
+    public void subfunc_challenge7_finActivity(){
+        mHandler.removeCallbacks(updatePicAndSound);
+        for(int i = 0; i < 5; i++){
+            if(outputted_pic[i][3] != -1){
+                soundPool.stop(outputted_pic[i][3]);
+            }
+        }
+        load_check = false;
+        soundPool.release();
+        soundPool = null;
     }
 }
