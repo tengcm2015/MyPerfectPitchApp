@@ -26,11 +26,10 @@ public class SelectModeActivity extends MainActivity implements View.OnClickList
         Button challengeButton = (Button)findViewById(R.id.button_mode_2);
         challengeButton.setOnClickListener(this);
 
-        Button returnButton = (Button)findViewById(R.id.button_mode_4);
+        BootstrapButton returnButton = (BootstrapButton)findViewById(R.id.button_mode_4);
         returnButton.setOnClickListener(this);
 
         BootstrapButton settingButton = (BootstrapButton) findViewById(R.id.button_mode_5);
-        settingButton.setTextSize(30);
         settingButton.setOnClickListener(this);
     }
 
