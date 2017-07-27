@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:bootstrap="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
+    <com.beardedhen.androidbootstrap.BootstrapButton
         android:id="@+id/button_challenge_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:text="難易度選択に戻る" />
+        android:layout_alignParentStart="true"
+        bootstrap:bootstrapBrand="info"
+        bootstrap:bootstrapSize="xl"
+        bootstrap:bootstrapText="{fa-angle-left} back"
+        bootstrap:roundedCorners="true" />
 
     <TextView
         android:text="TextView"
@@ -17,7 +22,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/textView_challenge_1"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"/>
+        android:layout_alignParentRight="true"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -82,62 +87,60 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <Button
-                    android:layout_width="wrap_content"
+                <Space
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2"/>
+                    android:layout_weight="1"/>
 
                 <Button
                     android:id="@+id/button_challenge_Cs"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="2"
                     android:text="C#" />
 
                 <Button
                     android:id="@+id/button_challenge_Ds"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="2"
                     android:text="D#" />
 
-                <Button
-                    android:layout_width="wrap_content"
+                <Space
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2"/>
+                    android:layout_weight="1"/>
 
-                <Button
-                    android:layout_width="wrap_content"
+                <Space
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2"/>
+                    android:layout_weight="1"/>
 
                 <Button
                     android:id="@+id/button_challenge_Fs"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignStart="@+id/textView_challenge_1"
-                    android:layout_alignTop="@+id/linearLayout2"
-                    android:layout_weight="1"
+                    android:layout_weight="2"
                     android:text="F#" />
 
                 <Button
                     android:id="@+id/button_challenge_Gs"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="2"
                     android:text="G#" />
 
                 <Button
                     android:id="@+id/button_challenge_As"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="2"
                     android:text="A#" />
 
-                <Button
-                    android:layout_width="wrap_content"
+                <Space
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2"/>
+                    android:layout_weight="1"/>
 
             </LinearLayout>
             <LinearLayout

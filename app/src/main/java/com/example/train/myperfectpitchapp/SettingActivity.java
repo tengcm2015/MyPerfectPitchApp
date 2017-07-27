@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.beardedhen.androidbootstrap.BootstrapButton;
+import com.beardedhen.androidbootstrap.TypefaceProvider;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +31,7 @@ public class SettingActivity extends MainActivity implements View.OnClickListene
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        TypefaceProvider.registerDefaultIconSets();
         setContentView(R.layout.activity_setting);
 
         //とりあえずデフォをゲット
@@ -42,21 +46,23 @@ public class SettingActivity extends MainActivity implements View.OnClickListene
         for(int i = 0; i < max_sound; i++){
             sound_buttons.add(getResources().getIdentifier("button_setting_sound_" + Integer.toString(i+1), "id", getPackageName()));
             Button button = (Button)findViewById(sound_buttons.get(sound_buttons.size() - 1));
+            if(i == 0){
+                //ボタン背景の作成
+                defaultBackGround = button.getBackground().getConstantState().newDrawable().mutate();
+                pushedBackGround = defaultBackGround.getConstantState().newDrawable().mutate();
+                pushedBackGround.setColorFilter(Color.CYAN, PorterDuff.Mode.SRC_OVER);
+
+            }
             button.setOnClickListener(this);
         }
 
         //リセット・決定・戻るボタンのセット
-        Button resetButton = (Button)findViewById(R.id.button_setting_reset);
-        Button decideButton = (Button)findViewById(R.id.button_setting_decide);
-        Button backButton = (Button)findViewById(R.id.button_setting_back);
+        BootstrapButton resetButton = (BootstrapButton)findViewById(R.id.button_setting_reset);
+        BootstrapButton decideButton = (BootstrapButton)findViewById(R.id.button_setting_decide);
+        BootstrapButton backButton = (BootstrapButton)findViewById(R.id.button_setting_back);
         resetButton.setOnClickListener(this);
         decideButton.setOnClickListener(this);
         backButton.setOnClickListener(this);
-
-        //ボタン背景の作成
-        defaultBackGround = resetButton.getBackground().getConstantState().newDrawable().mutate();
-        pushedBackGround = defaultBackGround.getConstantState().newDrawable().mutate();
-        pushedBackGround.setColorFilter(Color.CYAN, PorterDuff.Mode.SRC_OVER);
 
         //デフォルトボタンの背景変更
         change_background(tmp_mode[1]);

@@ -14,6 +14,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.beardedhen.androidbootstrap.BootstrapButton;
+
 import java.util.Arrays;
 import java.util.Random;
 
@@ -80,15 +82,6 @@ public class QuestionActivity extends MainActivity implements View.OnClickListen
         //レベル表示
         TextView levelText = (TextView)findViewById(R.id.textView_question_1);
         levelText.setText("level : " + String.valueOf(level));
-
-        //難易度選択に戻るボタン
-        Button returnButton = (Button)findViewById(R.id.button_question_1);
-        returnButton.setOnClickListener(this);
-
-        //ボタン背景を作成
-        defaultBackGround = returnButton.getBackground().getConstantState().newDrawable().mutate();
-        pushedBackGround = defaultBackGround.getConstantState().newDrawable().mutate();
-        pushedBackGround.setColorFilter(Color.CYAN, PorterDuff.Mode.SRC_OVER);
 
         //音声ファイルの初期化
         subfunc_question0_initsound();
@@ -184,18 +177,30 @@ public class QuestionActivity extends MainActivity implements View.OnClickListen
         for(int i = 0; i < 12; i++){
             buttons[i] = getResources().getIdentifier("button_question_" + soundname[i], "id", getPackageName());
             Button tmp_button = (Button)findViewById(buttons[i]);
+            if(i == 0){
+                //ボタン背景を作成
+                defaultBackGround = tmp_button.getBackground().getConstantState().newDrawable().mutate();
+                pushedBackGround = defaultBackGround.getConstantState().newDrawable().mutate();
+                pushedBackGround.setColorFilter(Color.CYAN, PorterDuff.Mode.SRC_OVER);
+            }
             tmp_button.setText(set_soundname[i]);
             tmp_button.setAllCaps(false);
             tmp_button.setOnClickListener(this);
         }
 
         //再度再生する
-        Button button_again = (Button)findViewById(R.id.button_question_again);
+        BootstrapButton button_again = (BootstrapButton) findViewById(R.id.button_question_again);
         button_again.setOnClickListener(this);
 
         //決定する
-        Button button_deside = (Button)findViewById(R.id.button_question_decide);
+        BootstrapButton button_deside = (BootstrapButton) findViewById(R.id.button_question_decide);
         button_deside.setOnClickListener(this);
+
+        //難易度選択に戻るボタン
+        BootstrapButton returnButton = (BootstrapButton) findViewById(R.id.button_question_1);
+        returnButton.setOnClickListener(this);
+
+
     }
 
     public void subfunc_question2(){
@@ -303,5 +308,14 @@ public class QuestionActivity extends MainActivity implements View.OnClickListen
                 dialog.dismiss();
             }
         });
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        BootstrapButton button1 = (BootstrapButton)findViewById(R.id.button_question_1);
+        int height = button1.getHeight();
+        BootstrapButton button2 = (BootstrapButton)findViewById(R.id.button_question_decide);
+        button2.setHeight(height);
     }
 }

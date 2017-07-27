@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.beardedhen.androidbootstrap.BootstrapButton;
+import com.beardedhen.androidbootstrap.TypefaceProvider;
+
 /**
  * Created by train on 2017/07/18.
  */
@@ -13,14 +16,17 @@ public class SelectChallengeActivity extends MainActivity implements View.OnClic
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        TypefaceProvider.registerDefaultIconSets();
         setContentView(R.layout.activity_selectchallenge);
 
-        Button challengeButton1 = (Button)findViewById(R.id.button_challenge_1);
-        Button challengeButton2 = (Button)findViewById(R.id.button_challenge_2);
-        Button returnButton1 = (Button)findViewById(R.id.button_challenge_5);
-        Button returnButton2 = (Button)findViewById(R.id.button_challenge_6);
+        BootstrapButton challengeButton1 = (BootstrapButton)findViewById(R.id.button_challenge_1);
+        BootstrapButton challengeButton2 = (BootstrapButton)findViewById(R.id.button_challenge_2);
+        BootstrapButton settingButton = (BootstrapButton)findViewById(R.id.button_challenge_5);
+        BootstrapButton returnButton1 = (BootstrapButton)findViewById(R.id.button_challenge_6);
+        BootstrapButton returnButton2 = (BootstrapButton)findViewById(R.id.button_challenge_7);
         challengeButton1.setOnClickListener(this);
         challengeButton2.setOnClickListener(this);
+        settingButton.setOnClickListener(this);
         returnButton1.setOnClickListener(this);
         returnButton2.setOnClickListener(this);
     }
@@ -39,7 +45,8 @@ public class SelectChallengeActivity extends MainActivity implements View.OnClic
                 startActivity(intent);
                 break;
             case R.id.button_challenge_5:
-                finish();
+                intent = new Intent(getApplication(), SettingActivity.class);
+                startActivity(intent);
                 break;
             case R.id.button_challenge_6:
                 intent = new Intent(getApplication(),MainActivity.class);
@@ -47,6 +54,18 @@ public class SelectChallengeActivity extends MainActivity implements View.OnClic
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
                 break;
+            case R.id.button_challenge_7:
+                finish();
+                break;
         }
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        BootstrapButton button1 = (BootstrapButton)findViewById(R.id.button_challenge_1);
+        int width = button1.getWidth();
+        BootstrapButton button2 = (BootstrapButton)findViewById(R.id.button_challenge_2);
+        button2.setWidth(width);
     }
 }

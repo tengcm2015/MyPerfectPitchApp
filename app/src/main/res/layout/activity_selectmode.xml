@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:bootstrap="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:id="@+id/layout_mode">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,33 +18,113 @@
             android:text="モード選択画面"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="3"
+            android:layout_weight="2"
             android:gravity="center_vertical"
             android:textAlignment="center" />
 
-        <Button
-            android:text="トレーニング"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:id="@+id/button_mode_1"
+            android:orientation="horizontal"
+            android:layout_weight="3"
             android:layout_gravity="center"
-            android:layout_weight="3"/>
+            >
 
-        <Button
-            android:text="力試し"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:id="@+id/button_mode_2"
-            android:layout_weight="3"
-            android:layout_gravity="center" />
 
-        <Button
-            android:text="友達と対決"
-            android:layout_width="match_parent"
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                bootstrap:bootstrapText="{fa-space-shuttle}"
+                bootstrap:bootstrapSize="xl"
+                bootstrap:roundedCorners="true"
+                bootstrap:bootstrapBrand="success"
+                />
+
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_mode_1"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                bootstrap:bootstrapText="トレーニング"
+                bootstrap:bootstrapSize="xl"
+                bootstrap:roundedCorners="true"
+                bootstrap:bootstrapBrand="primary"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:id="@+id/button_mode_3"
+            android:orientation="horizontal"
             android:layout_weight="3"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            >
+
+
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                bootstrap:bootstrapText="{fa-space-shuttle}"
+                bootstrap:bootstrapSize="xl"
+                bootstrap:roundedCorners="true"
+                bootstrap:bootstrapBrand="success"/>
+
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                android:id="@+id/button_mode_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                bootstrap:bootstrapBrand="primary"
+                bootstrap:bootstrapSize="xl"
+                bootstrap:bootstrapText="力試し"
+                bootstrap:roundedCorners="true" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:layout_weight="3"
+            android:layout_gravity="center"
+            >
+
+            <!--
+            <com.beardedhen.androidbootstrap.AwesomeTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="24sp"
+                bootstrap:bootstrapText="{fa-graduation-cap}" />
+            -->
+
+
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                bootstrap:bootstrapText="{fa-space-shuttle}"
+                bootstrap:bootstrapSize="xl"
+                bootstrap:roundedCorners="true"
+                bootstrap:bootstrapBrand="success"/>
+
+
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_mode_3"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                bootstrap:bootstrapText="友達と対決"
+                bootstrap:bootstrapSize="xl"
+                bootstrap:roundedCorners="true"
+                bootstrap:bootstrapBrand="primary"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -53,7 +135,7 @@
         bootstrap:roundedCorners="true"
         bootstrap:bootstrapBrand="info"
         bootstrap:bootstrapSize="xl"
-        bootstrap:bootstrapText="{fa-angle-left} TOP"
+        bootstrap:bootstrapText="{fa-home}"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true" />
 
@@ -64,19 +146,8 @@
         bootstrap:roundedCorners="true"
         bootstrap:bootstrapBrand="info"
         bootstrap:bootstrapSize="xl"
-        bootstrap:bootstrapText="SETTING {fa-gear}"
+        bootstrap:bootstrapText="{fa-gear}"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true" />
 
-
-
-    <!--
-    <Button
-        android:id="@+id/button_mode_5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:text="設定" />
-    -->
 </RelativeLayout>

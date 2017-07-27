@@ -1,41 +1,193 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bootstrap="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
 
-    <Button
-        android:text="簡単"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/button_level_1" />
+        android:layout_height="match_parent"
+        android:layout_above="@id/button_level_5"
+        android:orientation="vertical">
 
-    <Button
-        android:text="普通"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/button_level_2" />
+        <TextView
+            android:text="レベル選択画面"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:gravity="center_vertical"
+            android:textAlignment="center" />
 
-    <Button
-        android:text="難しい"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/button_level_3" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:layout_weight="3"
+            android:layout_gravity="center"
+            >
 
-    <Button
-        android:text="鬼"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/button_level_4" />
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                bootstrap:bootstrapText="{fa-space-shuttle}"
+                bootstrap:bootstrapSize="xl"
+                bootstrap:roundedCorners="true"
+                bootstrap:bootstrapBrand="success"
+                />
 
-    <Button
-        android:text="@string/back_mode"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/button_level_5" />
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_level_1"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                bootstrap:bootstrapText="かんたん"
+                bootstrap:bootstrapSize="xl"
+                bootstrap:roundedCorners="true"
+                bootstrap:bootstrapBrand="primary"/>
 
-    <Button
-        android:text="@string/back_top"
-        android:layout_width="match_parent"
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:layout_weight="3"
+            android:layout_gravity="center"
+            >
+
+
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                bootstrap:bootstrapText="{fa-space-shuttle}"
+                bootstrap:bootstrapSize="xl"
+                bootstrap:roundedCorners="true"
+                bootstrap:bootstrapBrand="success"/>
+
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_level_2"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                bootstrap:bootstrapText="ふつう"
+                bootstrap:bootstrapSize="xl"
+                bootstrap:roundedCorners="true"
+                bootstrap:bootstrapBrand="primary"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:layout_weight="3"
+            android:layout_gravity="center"
+            >
+
+            <!--
+            <com.beardedhen.androidbootstrap.AwesomeTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="24sp"
+                bootstrap:bootstrapText="{fa-graduation-cap}" />
+            -->
+
+
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                bootstrap:bootstrapText="{fa-space-shuttle}"
+                bootstrap:bootstrapSize="xl"
+                bootstrap:roundedCorners="true"
+                bootstrap:bootstrapBrand="success"/>
+
+
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_level_3"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                bootstrap:bootstrapText="難しい"
+                bootstrap:bootstrapSize="xl"
+                bootstrap:roundedCorners="true"
+                bootstrap:bootstrapBrand="primary"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:layout_weight="3"
+            android:layout_gravity="center"
+            >
+
+
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                bootstrap:bootstrapText="{fa-space-shuttle}"
+                bootstrap:bootstrapSize="xl"
+                bootstrap:roundedCorners="true"
+                bootstrap:bootstrapBrand="success"/>
+
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_level_4"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                bootstrap:bootstrapText="鬼"
+                bootstrap:bootstrapSize="xl"
+                bootstrap:roundedCorners="true"
+                bootstrap:bootstrapBrand="primary"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <com.beardedhen.androidbootstrap.BootstrapButton
+        android:id="@+id/button_level_5"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/button_level_6" />
-</LinearLayout>
+        bootstrap:bootstrapBrand="info"
+        bootstrap:bootstrapSize="xl"
+        bootstrap:bootstrapText="{fa-gear}"
+        bootstrap:roundedCorners="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"/>
+
+    <com.beardedhen.androidbootstrap.BootstrapButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_level_6"
+        bootstrap:roundedCorners="true"
+        bootstrap:bootstrapBrand="info"
+        bootstrap:bootstrapSize="xl"
+        bootstrap:bootstrapText="{fa-home}"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
+
+    <com.beardedhen.androidbootstrap.BootstrapButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_level_7"
+        bootstrap:roundedCorners="true"
+        bootstrap:bootstrapBrand="info"
+        bootstrap:bootstrapSize="xl"
+        bootstrap:bootstrapText="{fa-angle-left}"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@id/button_level_6" />
+
+</RelativeLayout>

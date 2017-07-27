@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bootstrap="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -114,30 +115,42 @@
 
     </GridLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center">
+        android:layout_height="wrap_content">
 
-        <Button
+        <com.beardedhen.androidbootstrap.BootstrapButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/button_setting_reset"
-            android:text="リセット"/>
+            bootstrap:roundedCorners="true"
+            bootstrap:bootstrapBrand="info"
+            bootstrap:bootstrapSize="xl"
+            bootstrap:bootstrapText="reset {fa-refresh}"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true" />
 
-        <Button
+        <com.beardedhen.androidbootstrap.BootstrapButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/button_setting_decide"
-            android:text="決定"/>
+            bootstrap:roundedCorners="true"
+            bootstrap:bootstrapBrand="info"
+            bootstrap:bootstrapSize="xl"
+            bootstrap:bootstrapText="{fa-check}"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
 
-        <Button
+        <com.beardedhen.androidbootstrap.BootstrapButton
+            android:id="@+id/button_setting_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/button_setting_back"
-            android:text="戻る"/>
+            bootstrap:bootstrapBrand="info"
+            bootstrap:bootstrapSize="xl"
+            bootstrap:bootstrapText="{fa-angle-left} back"
+            bootstrap:roundedCorners="true" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>
 
