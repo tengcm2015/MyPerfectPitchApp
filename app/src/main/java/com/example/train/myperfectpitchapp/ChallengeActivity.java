@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.beardedhen.androidbootstrap.BootstrapButton;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -87,15 +89,6 @@ public class ChallengeActivity extends MainActivity implements View.OnClickListe
         //レベル表示
         TextView challengeText = (TextView)findViewById(R.id.textView_challenge_1);
         challengeText.setText("challenge : " + String.valueOf(challenge));
-
-        //難易度選択に戻るボタン
-        Button returnButton = (Button)findViewById(R.id.button_challenge_back);
-        returnButton.setOnClickListener(this);
-
-        //ボタン背景を作成
-        defaultBackGround = returnButton.getBackground().getConstantState().newDrawable().mutate();
-        pushedBackGround = defaultBackGround.getConstantState().newDrawable().mutate();
-        pushedBackGround.setColorFilter(Color.CYAN, PorterDuff.Mode.SRC_OVER);
 
         //音声ファイルの初期化
         subfunc_challenge0_initsound();
@@ -190,10 +183,22 @@ public class ChallengeActivity extends MainActivity implements View.OnClickListe
         for(int i = 0; i < 12; i++){
             buttons[i] = getResources().getIdentifier("button_challenge_" + soundname[i], "id", getPackageName());
             Button tmp_button = (Button)findViewById(buttons[i]);
+            if(i == 0){
+                //ボタン背景を作成
+                defaultBackGround = tmp_button.getBackground().getConstantState().newDrawable().mutate();
+                pushedBackGround = defaultBackGround.getConstantState().newDrawable().mutate();
+                pushedBackGround.setColorFilter(Color.CYAN, PorterDuff.Mode.SRC_OVER);
+            }
             tmp_button.setText(set_soundname[i]);
             tmp_button.setAllCaps(false);
             tmp_button.setOnClickListener(this);
         }
+
+        //難易度選択に戻るボタン
+        BootstrapButton returnButton = (BootstrapButton) findViewById(R.id.button_challenge_back);
+        returnButton.setOnClickListener(this);
+
+
     }
 
     public void subfunc_challenge(){
@@ -258,7 +263,7 @@ public class ChallengeActivity extends MainActivity implements View.OnClickListe
         ImageView imageView = (ImageView)findViewById(getResources().getIdentifier("image_challenge_" + Integer.toString(pic_tmpnum + 1), "id", getPackageName()));
         imageView.setImageResource(R.drawable.girl_sleep);
         //音の出力
-        outputted_pic[pic_tmpnum][3] = soundPool.play(soundIds[sound_tmpnum],1.0f,1.0f,0,100,1.0f);
+        outputted_pic[pic_tmpnum][3] = soundPool.play(soundIds[sound_tmpnum],1.0f,1.0f,0,10,1.0f);
     }
 
     public void subfunc_challenge4_timepass(){
