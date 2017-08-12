@@ -207,7 +207,7 @@ public class ChallengeActivity extends MainActivity implements View.OnClickListe
             public void run() {
                 //全マスが埋まっていないかチェック
                 ArrayList<Integer> check = subfunc_challenge2_check();
-                if(check.size() != 5){
+                if((check.size() != 5) && (now_num <= question)){
                     //埋まっていない・一定時間経過で音追加
                     subfunc_challenge3_makesound(check);
                     now_num += 1;
@@ -215,7 +215,7 @@ public class ChallengeActivity extends MainActivity implements View.OnClickListe
                 //埋まっているマスが一定時間経過でマス封印
                 subfunc_challenge4_timepass();
                 //全マスが埋まる・全マス封印で終了
-                if(subfunc_challenge5_fincheck() || (now_num == question)){
+                if((subfunc_challenge5_fincheck()) || (now_num > question)){
                     //終了
                     subfunc_challenge7_finActivity();
                     Intent intent = new Intent(getApplication(),ResultActivity.class);
