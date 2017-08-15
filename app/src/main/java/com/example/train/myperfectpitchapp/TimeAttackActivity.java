@@ -24,12 +24,12 @@ import java.util.Random;
  * Created by train on 2017/08/12.
  */
 
-public class TimeAtackActivity extends MainActivity implements View.OnClickListener, SoundPool.OnLoadCompleteListener{
+public class TimeAttackActivity extends MainActivity implements View.OnClickListener, SoundPool.OnLoadCompleteListener{
 
     //グローバル変数用
     UtilCommon common;
     //チャレンジ
-    int challenge = 0;
+    int timeattack = 0;
     //処理待ち
     boolean load_check = false;
     ProgressDialog progressDialog;
@@ -40,10 +40,10 @@ public class TimeAtackActivity extends MainActivity implements View.OnClickListe
     String[] soundname;
     String[] set_soundname;
     //入力値
-    //int[] inputted_key = new int[12];
+    int[] inputted_key = new int[12];
     int[] buttons = new int[12];
     //出力画面占有状況
-    int[][] outputted_pic = new int[5][4];
+    int[][] outputted_pic = new int[3][4];
     //待てる時間(カウント数)
     int waitcount = 5;
     //問題数
@@ -62,7 +62,7 @@ public class TimeAtackActivity extends MainActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_challenge);
+        setContentView(R.layout.activity_timeattack);
 
         //グローバル変数用
         common = (UtilCommon)getApplication();
@@ -70,7 +70,7 @@ public class TimeAtackActivity extends MainActivity implements View.OnClickListe
 
         //レベル取得
         Intent intent = getIntent();
-        challenge = intent.getIntExtra("challenge", 0);
+        timeattack = intent.getIntExtra("timeattack", 0);
 
         //問題数取得
         int tmp = 20;
@@ -78,7 +78,7 @@ public class TimeAtackActivity extends MainActivity implements View.OnClickListe
 
         //結果変数初期化
         Arrays.fill(result,0);
-        result[0] = challenge;
+        result[0] = timeattack;
         result[1] = question * 10;//最大ポイント = 問題数 * 10
 
         //文字列取得
@@ -87,36 +87,34 @@ public class TimeAtackActivity extends MainActivity implements View.OnClickListe
         set_soundname = getResources().getStringArray(getResources().getIdentifier(Language[tmp_mode[1]] + "_soundNames","array", getPackageName()));
 
         //レベル表示
-        TextView challengeText = (TextView)findViewById(R.id.textView_challenge_1);
-        challengeText.setText("challenge : " + String.valueOf(challenge));
+        TextView timeattackText = (TextView)findViewById(R.id.textView_timeattack_1);
+        timeattackText.setText("timeattack : " + String.valueOf(timeattack));
 
         //音声ファイルの初期化
-        subfunc_challenge0_initsound();
+        subfunc_timeattack0_initsound();
     }
 
     @Override
     public void onClick(View view){
         switch (view.getId()){
-            case R.id.button_challenge_back:
+            case R.id.button_timeattack_back:
                 //難易度選択に戻る
-                subfunc_challenge7_finActivity();
+                subfunc_timeattack7_finActivity();
                 finish();
                 break;
             default:
                 //キーボード入力
                 for(int i = 0; i < 12; i++){
                     if(view.getId() == buttons[i]){
-                        subfunc_challenge6_anscheck(i);
-                        /*************************************************:
-                         Button button = (Button)findViewById(view.getId());
-                         if(inputted_key[i] == 1){
-                         inputted_key[i] = 0;
-                         button.setBackground(defaultBackGround);
-                         }else{
-                         inputted_key[i] = 1;
-                         button.setBackground(pushedBackGround);
-                         }break;
-                         ****************************************************/
+                        Button button = (Button)findViewById(view.getId());
+                        if(inputted_key[i] == 1){
+                            inputted_key[i] = 0;
+                            button.setBackground(defaultBackGround);
+                        }else{
+                            inputted_key[i] = 1;
+                            button.setBackground(pushedBackGround);
+                        }
+                        subfunc_timeattack6_anscheck(i);
                     }
                 }
                 break;
@@ -132,11 +130,11 @@ public class TimeAtackActivity extends MainActivity implements View.OnClickListe
             //ロード中ダイアログ消去
             progressDialog.dismiss();
             //再帰的に問題を出題・回答
-            subfunc_challenge();
+            subfunc_timeattack();
         }
     }
 
-    public void subfunc_challenge0_initsound(){
+    public void subfunc_timeattack0_initsound(){
 
         //プログレスダイアログを出す
         progressDialog = new ProgressDialog(this);
@@ -171,7 +169,7 @@ public class TimeAtackActivity extends MainActivity implements View.OnClickListe
         soundIds[11] = soundPool.load(this, R.raw.piano_b, 1);
 
         //キーボードの値リセット
-        //Arrays.fill(inputted_key,0);
+        Arrays.fill(inputted_key,0);
 
         //出力画面占有状況値リセット
         for(int i = 0; i < outputted_pic.length; i++){
@@ -181,7 +179,7 @@ public class TimeAtackActivity extends MainActivity implements View.OnClickListe
 
         //入力キーボーボタン初期化
         for(int i = 0; i < 12; i++){
-            buttons[i] = getResources().getIdentifier("button_challenge_" + soundname[i], "id", getPackageName());
+            buttons[i] = getResources().getIdentifier("button_timeattack_" + soundname[i], "id", getPackageName());
             Button tmp_button = (Button)findViewById(buttons[i]);
             if(i == 0){
                 //ボタン背景を作成
@@ -195,43 +193,43 @@ public class TimeAtackActivity extends MainActivity implements View.OnClickListe
         }
 
         //難易度選択に戻るボタン
-        BootstrapButton returnButton = (BootstrapButton) findViewById(R.id.button_challenge_back);
+        BootstrapButton returnButton = (BootstrapButton) findViewById(R.id.button_timeattack_back);
         returnButton.setOnClickListener(this);
 
 
     }
 
-    public void subfunc_challenge(){
+    public void subfunc_timeattack(){
         //一秒毎に追加するシステム
         updatePicAndSound = new Runnable() {
             public void run() {
-                //全マスが埋まっていないかチェック
-                ArrayList<Integer> check = subfunc_challenge2_check();
-                if((check.size() != 5) && (now_num <= question)){
-                    //埋まっていない・一定時間経過で音追加
-                    subfunc_challenge3_makesound(check);
-                    now_num += 1;
-                }
-                //埋まっているマスが一定時間経過でマス封印
-                subfunc_challenge4_timepass();
-                //全マスが埋まる・全マス封印で終了
-                if((subfunc_challenge5_fincheck()) || (now_num > question)){
-                    //終了
-                    subfunc_challenge7_finActivity();
-                    Intent intent = new Intent(getApplication(),ResultActivity.class);
-                    intent.putExtra("result",result);
-                    startActivity(intent);
-                }else{
-                    //継続
-                    //mHandler.removeCallbacks(updatePicAndSound);
-                    mHandler.postDelayed(updatePicAndSound, 2000);
-                }
+                mHandler.postDelayed(updatePicAndSound, 2000);
             }
         };
         mHandler.postDelayed(updatePicAndSound, 2000);
+
+        /***************************************************
+        //全マスが埋まっていないかチェック
+        ArrayList<Integer> check = subfunc_timeattack2_check();
+        if((check.size() != 5) && (now_num <= question)){
+            //埋まっていない・一定時間経過で音追加
+            subfunc_timeattack3_makesound(check);
+            now_num += 1;
+        }
+        //埋まっているマスが一定時間経過でマス封印
+        subfunc_timeattack4_timepass();
+        //全マスが埋まる・全マス封印で終了
+        if((subfunc_timeattack5_fincheck()) || (now_num > question)){
+            //終了
+            subfunc_timeattack7_finActivity();
+            Intent intent = new Intent(getApplication(),ResultActivity.class);
+            intent.putExtra("result",result);
+            startActivity(intent);
+        }
+         ***************************************************/
     }
 
-    public ArrayList<Integer> subfunc_challenge2_check(){
+    public ArrayList<Integer> subfunc_timeattack2_check(){
         ArrayList<Integer> array = new ArrayList<Integer>();
         for(int i = 0; i < outputted_pic.length; i++){
             if(outputted_pic[i][0] == 1){
@@ -243,14 +241,17 @@ public class TimeAtackActivity extends MainActivity implements View.OnClickListe
         return array;
     }
 
-    public void subfunc_challenge3_makesound(ArrayList<Integer> tmp_check){
+    public void subfunc_timeattack3_makesound(ArrayList<Integer> tmp_check){
         //乱数作成
         Random rnd = new Random();
         int sound_tmpnum, pic_tmpnum;
-        //場所を決める
+        //場所を決める//場所は一か所
+        pic_tmpnum = 1;
+        /*****************************************
         do {
             pic_tmpnum = rnd.nextInt(5);
         }while (outputted_pic[pic_tmpnum][0] != 0);
+         ******************************************/
         //音を決める
         do {
             sound_tmpnum = rnd.nextInt(12);
@@ -260,18 +261,18 @@ public class TimeAtackActivity extends MainActivity implements View.OnClickListe
         outputted_pic[pic_tmpnum][1] = sound_tmpnum;
         outputted_pic[pic_tmpnum][2] = 1;
         //画面に出力
-        ImageView imageView = (ImageView)findViewById(getResources().getIdentifier("image_challenge_" + Integer.toString(pic_tmpnum + 1), "id", getPackageName()));
-        imageView.setImageResource(R.drawable.girl_sleep);
+        ImageView imageView = (ImageView)findViewById(getResources().getIdentifier("image_timeattack_" + Integer.toString(pic_tmpnum + 1), "id", getPackageName()));
+        imageView.setImageResource(R.drawable.girl_play);
         //音の出力
         outputted_pic[pic_tmpnum][3] = soundPool.play(soundIds[sound_tmpnum],1.0f,1.0f,0,10,1.0f);
     }
 
-    public void subfunc_challenge4_timepass(){
+    public void subfunc_timeattack4_timepass(){
         for(int i = 0; i < outputted_pic.length; i++){
             if(outputted_pic[i][2] > waitcount){
                 //正しい音が入力されなかった
                 //画面反映
-                ImageView imageView = (ImageView)findViewById(getResources().getIdentifier("image_challenge_" + Integer.toString(i+1), "id", getPackageName()));
+                ImageView imageView = (ImageView)findViewById(getResources().getIdentifier("image_timeattack_" + Integer.toString(i+1), "id", getPackageName()));
                 imageView.setImageResource(R.drawable.girl_ng);
                 //音を止める
                 soundPool.stop(outputted_pic[i][3]);
@@ -281,7 +282,7 @@ public class TimeAtackActivity extends MainActivity implements View.OnClickListe
         }
     }
 
-    public boolean subfunc_challenge5_fincheck(){
+    public boolean subfunc_timeattack5_fincheck(){
         for(int i = 0; i < outputted_pic.length; i++){
             if(outputted_pic[i][0] != -1){
                 //まだマスが閉じられていない
@@ -291,25 +292,33 @@ public class TimeAtackActivity extends MainActivity implements View.OnClickListe
         return true;
     }
 
-    public void subfunc_challenge6_anscheck(int tmp){
-        for(int i = 0; i < 5; i++){
-            if(outputted_pic[i][1] == tmp){
-                //入力はi番目で正解だった
-                //画面反映
-                ImageView imageView = (ImageView)findViewById(getResources().getIdentifier("image_challenge_" + Integer.toString(i+1), "id", getPackageName()));
-                imageView.setImageResource(R.drawable.girl_ok);
-                //結果に追加
-                result[2] += 10;
-                //音を止める
-                soundPool.stop(outputted_pic[i][3]);
-                //配列初期化
-                Arrays.fill(outputted_pic[i],-1);
-                outputted_pic[i][0] = 0;
-            }
+    public void subfunc_timeattack6_anscheck(int tmp){
+        if(outputted_pic[1][1] == tmp){
+            //入力が正解
+            //画面反映
+            ImageView imageView = (ImageView)findViewById(getResources().getIdentifier("image_timeattack_" + Integer.toString(1+1), "id", getPackageName()));
+            imageView.setImageResource(R.drawable.girl_ok);
+            //結果に追加
+            result[2] += 10;
+            //音を止める
+            soundPool.stop(outputted_pic[1][3]);
+            //配列初期化
+            Arrays.fill(outputted_pic[1],-1);
+            outputted_pic[1][0] = 0;
+        }
+        else{
+            //入力が不正解
+            //画面反映
+            ImageView imageView = (ImageView)findViewById(getResources().getIdentifier("image_timeattack_" + Integer.toString(1+1), "id", getPackageName()));
+            imageView.setImageResource(R.drawable.girl_ng);
+            //音を止める
+            soundPool.stop(outputted_pic[1][3]);
+            //配列初期化
+            Arrays.fill(outputted_pic[1],-1);
         }
     }
 
-    public void subfunc_challenge7_finActivity(){
+    public void subfunc_timeattack7_finActivity(){
         mHandler.removeCallbacks(updatePicAndSound);
         for(int i = 0; i < 5; i++){
             if(outputted_pic[i][3] != -1){

@@ -41,6 +41,10 @@
             android:label="@string/app_name" >
         </activity>
         <activity
+            android:name=".TimeAttackActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
             android:name=".ResultActivity"
             android:label="@string/app_name" >
         </activity>

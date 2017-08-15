@@ -5,8 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ProgressBar
+        android:id="@+id/progressBar_1"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <ProgressBar
+        android:id="@+id/progressBar_2"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/progressBar_1"
+        android:layout_centerHorizontal="true" />
+
     <com.beardedhen.androidbootstrap.BootstrapButton
-        android:id="@+id/button_timeatack_back"
+        android:id="@+id/button_timeattack_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -16,20 +32,31 @@
         bootstrap:bootstrapText="{fa-angle-left} back"
         bootstrap:roundedCorners="true" />
 
+    <com.beardedhen.androidbootstrap.BootstrapButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_timeattack_again"
+        bootstrap:roundedCorners="true"
+        bootstrap:bootstrapBrand="info"
+        bootstrap:bootstrapSize="xl"
+        bootstrap:bootstrapText="again {fa-refresh}"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true" />
+
     <TextView
         android:text="TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView_timeatack_1"
+        android:id="@+id/textView_timeattack_1"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"/>
+        android:layout_toLeftOf="@+id/button_timeattack_again"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:orientation="vertical"
-        android:layout_above="@+id/button_timeatack_back">
+        android:layout_above="@+id/button_timeattack_back"
+        android:layout_below="@+id/progressBar_2">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -41,21 +68,21 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:scaleType="centerInside"
-                android:id="@+id/image_timeatack_before"
+                android:id="@+id/image_timeattack_before"
                 android:layout_weight="1"/>
 
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:scaleType="centerInside"
-                android:id="@+id/image_timeatack_now"
+                android:id="@+id/image_timeattack_now"
                 android:layout_weight="2"/>
 
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:scaleType="centerInside"
-                android:id="@+id/image_timeatack_next"
+                android:id="@+id/image_timeattack_next"
                 android:layout_weight="1"/>
 
         </LinearLayout>
@@ -79,14 +106,14 @@
                     android:layout_weight="1"/>
 
                 <Button
-                    android:id="@+id/button_timeatack_Cs"
+                    android:id="@+id/button_timeattack_Cs"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:text="C#" />
 
                 <Button
-                    android:id="@+id/button_timeatack_Ds"
+                    android:id="@+id/button_timeattack_Ds"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
@@ -103,21 +130,21 @@
                     android:layout_weight="1"/>
 
                 <Button
-                    android:id="@+id/button_timeatack_Fs"
+                    android:id="@+id/button_timeattack_Fs"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:text="F#" />
 
                 <Button
-                    android:id="@+id/button_timeatack_Gs"
+                    android:id="@+id/button_timeattack_Gs"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:text="G#" />
 
                 <Button
-                    android:id="@+id/button_timeatack_As"
+                    android:id="@+id/button_timeattack_As"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
@@ -134,49 +161,49 @@
                 android:layout_height="wrap_content">
 
                 <Button
-                    android:id="@+id/button_timeatack_C"
+                    android:id="@+id/button_timeattack_C"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="C" />
 
                 <Button
-                    android:id="@+id/button_timeatack_D"
+                    android:id="@+id/button_timeattack_D"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="D" />
 
                 <Button
-                    android:id="@+id/button_timeatack_E"
+                    android:id="@+id/button_timeattack_E"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="E" />
 
                 <Button
-                    android:id="@+id/button_timeatack_F"
+                    android:id="@+id/button_timeattack_F"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="F" />
 
                 <Button
-                    android:id="@+id/button_timeatack_G"
+                    android:id="@+id/button_timeattack_G"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="G" />
 
                 <Button
-                    android:id="@+id/button_timeatack_A"
+                    android:id="@+id/button_timeattack_A"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="A" />
 
                 <Button
-                    android:id="@+id/button_timeatack_B"
+                    android:id="@+id/button_timeattack_B"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
