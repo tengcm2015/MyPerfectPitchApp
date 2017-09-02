@@ -6,7 +6,9 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.media.AudioAttributes;
+import android.media.AudioManager;
 import android.media.SoundPool;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -150,15 +152,19 @@ public class TimeAttackActivity extends MainActivity implements View.OnClickList
         progressDialog.setCancelable(true);
         progressDialog.show();
 
-        AudioAttributes attr = new AudioAttributes.Builder()
-                .setUsage(AudioAttributes.USAGE_MEDIA)
-                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                .build();
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){
+            soundPool = new SoundPool(SOUND_POOL_MAX, AudioManager.STREAM_MUSIC, 0);
+        }else{
+            AudioAttributes attr = new AudioAttributes.Builder()
+                    .setUsage(AudioAttributes.USAGE_MEDIA)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                    .build();
 
-        soundPool = new SoundPool.Builder()
-                .setAudioAttributes(attr)
-                .setMaxStreams(SOUND_POOL_MAX)
-                .build();
+            soundPool = new SoundPool.Builder()
+                    .setAudioAttributes(attr)
+                    .setMaxStreams(SOUND_POOL_MAX)
+                    .build();
+        }
 
         soundPool.setOnLoadCompleteListener(this);
 
