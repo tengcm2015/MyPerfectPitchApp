@@ -33,13 +33,17 @@ public class SelectChallengeActivity extends MainActivity implements View.OnClic
 
     @Override
     public void onClick(View view){
-        int challenge = 7;
+        int challenge;
         Intent intent;
         switch (view.getId()){
             case R.id.button_challenge_1:
-                challenge -= 1;
+                challenge = 5;
+                intent = new Intent(getApplication(),TimeAttackActivity.class);
+                intent.putExtra("timeattack",challenge);
+                startActivity(intent);
+                break;
             case R.id.button_challenge_2:
-                challenge -= 1;
+                challenge = 6;
                 intent = new Intent(getApplication(),ChallengeActivity.class);
                 intent.putExtra("challenge",challenge);
                 startActivity(intent);

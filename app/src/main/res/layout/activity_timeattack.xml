@@ -1,25 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:bootstrap="http://schemas.android.com/apk/res-auto"
+    xmlns:circleprogress="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ProgressBar
-        android:id="@+id/progressBar_1"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
-    <ProgressBar
-        android:id="@+id/progressBar_2"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/progressBar_1"
-        android:layout_centerHorizontal="true" />
 
     <com.beardedhen.androidbootstrap.BootstrapButton
         android:id="@+id/button_timeattack_back"
@@ -55,8 +42,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_above="@+id/button_timeattack_back"
-        android:layout_below="@+id/progressBar_2">
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/button_timeattack_back">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -64,26 +51,28 @@
             android:orientation="horizontal"
             android:layout_weight="1">
 
-            <ImageView
+            <com.github.lzyzsd.circleprogress.DonutProgress
+                android:id="@+id/progressBar1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:scaleType="centerInside"
-                android:id="@+id/image_timeattack_before"
-                android:layout_weight="1"/>
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1" />
 
             <ImageView
+                android:id="@+id/image_timeattack_2"
+                android:src="@drawable/girl_sleep"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:scaleType="centerInside"
-                android:id="@+id/image_timeattack_now"
-                android:layout_weight="2"/>
+                android:layout_gravity="center_vertical"
+                android:layout_weight="2"
+                android:scaleType="centerInside" />
 
-            <ImageView
+            <com.github.lzyzsd.circleprogress.DonutProgress
+                android:id="@+id/progressBar2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:scaleType="centerInside"
-                android:id="@+id/image_timeattack_next"
-                android:layout_weight="1"/>
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1" />
 
         </LinearLayout>
 

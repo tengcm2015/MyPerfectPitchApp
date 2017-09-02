@@ -8,13 +8,17 @@ import android.graphics.drawable.Drawable;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
+import com.github.lzyzsd.circleprogress.DonutProgress;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,8 +48,9 @@ public class TimeAttackActivity extends MainActivity implements View.OnClickList
     int[] buttons = new int[12];
     //出力画面占有状況
     int[][] outputted_pic = new int[3][4];
-    //待てる時間(カウント数)
-    int waitcount = 5;
+    //待てる時間
+    int waittime_all = 20000;
+    int waittime_q = 5000;
     //問題数
     int now_num = 0;
     int question;
@@ -54,10 +59,11 @@ public class TimeAttackActivity extends MainActivity implements View.OnClickList
     //背景
     Drawable defaultBackGround;
     Drawable pushedBackGround;
-    /** スレッドUI操作用ハンドラ */
-    private Handler mHandler = new Handler();
-    /** テキストオブジェクト */
-    private Runnable updatePicAndSound;
+    //countdowntimer
+    Handler handler1 = new Handler();
+    Handler handler2 = new Handler();
+    CountDownTimer countDownTimer1;
+    CountDownTimer countDownTimer2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +79,7 @@ public class TimeAttackActivity extends MainActivity implements View.OnClickList
         timeattack = intent.getIntExtra("timeattack", 0);
 
         //問題数取得
-        int tmp = 20;
+        int tmp = 40;
         question = tmp;
 
         //結果変数初期化
@@ -106,19 +112,20 @@ public class TimeAttackActivity extends MainActivity implements View.OnClickList
                 //キーボード入力
                 for(int i = 0; i < 12; i++){
                     if(view.getId() == buttons[i]){
-                        Button button = (Button)findViewById(view.getId());
-                        if(inputted_key[i] == 1){
-                            inputted_key[i] = 0;
-                            button.setBackground(defaultBackGround);
-                        }else{
-                            inputted_key[i] = 1;
-                            button.setBackground(pushedBackGround);
-                        }
+                        //答えチェック
                         subfunc_timeattack6_anscheck(i);
+                        break;
                     }
                 }
+                //ちょっと待つ
+                /******************
+                try {
+                    Thread.sleep(50); //50ミリ秒Sleepする
+                } catch (InterruptedException e) {                }
+                 ***************/
+                //再度実行
+                subfunc_timeattack3_makesound();
                 break;
-
         }
     }
 
@@ -200,99 +207,81 @@ public class TimeAttackActivity extends MainActivity implements View.OnClickList
     }
 
     public void subfunc_timeattack(){
-        //一秒毎に追加するシステム
-        updatePicAndSound = new Runnable() {
-            public void run() {
-                mHandler.postDelayed(updatePicAndSound, 2000);
+        //初回の音を鳴らす
+        subfunc_timeattack3_makesound();
+        //時間経過で終了
+        DonutProgress donutProgress = (DonutProgress) findViewById(R.id.progressBar1);
+        //donutProgress.setMax(100);
+        int tmp_time = waittime_all/100;
+        Log.d("DonutProgress1 tmp1",Long.toString(tmp_time));
+        countDownTimer1 = new CountDownTimer(waittime_all,tmp_time) {
+            @Override
+            public void onTick(long l) {
+                // lは残り時間 // 最後max値の100になって終了
+                Log.d("DonutProgress1",Long.toString(l));
+                //donutProgress.setProgress((int) (waittime_all - l) / 100);
+                donutProgress.setProgress(donutProgress.getProgress()+1);
             }
-        };
-        mHandler.postDelayed(updatePicAndSound, 2000);
 
-        /***************************************************
-        //全マスが埋まっていないかチェック
-        ArrayList<Integer> check = subfunc_timeattack2_check();
-        if((check.size() != 5) && (now_num <= question)){
-            //埋まっていない・一定時間経過で音追加
-            subfunc_timeattack3_makesound(check);
-            now_num += 1;
-        }
-        //埋まっているマスが一定時間経過でマス封印
-        subfunc_timeattack4_timepass();
-        //全マスが埋まる・全マス封印で終了
-        if((subfunc_timeattack5_fincheck()) || (now_num > question)){
-            //終了
-            subfunc_timeattack7_finActivity();
-            Intent intent = new Intent(getApplication(),ResultActivity.class);
-            intent.putExtra("result",result);
-            startActivity(intent);
-        }
-         ***************************************************/
+            @Override
+            public void onFinish() {
+                //時間経過。終了。
+                subfunc_timeattack7_finActivity();
+                Intent intent = new Intent(getApplication(),ResultActivity.class);
+                intent.putExtra("result",result);
+                startActivity(intent);
+            }
+        }.start();
     }
 
-    public ArrayList<Integer> subfunc_timeattack2_check(){
-        ArrayList<Integer> array = new ArrayList<Integer>();
-        for(int i = 0; i < outputted_pic.length; i++){
-            if(outputted_pic[i][0] == 1){
-                //表示されている
-                array.add(outputted_pic[i][1]);
-                outputted_pic[i][2] += 1;
+    public void subfunc_timeattack2_checktime(){
+        DonutProgress progressBar2 = (DonutProgress) findViewById(R.id.progressBar2);
+        //progressBar2.setMax(100);
+        int tmp_time2 = waittime_q/100;
+        Log.d("DonutProgress2 tmp2",Long.toString(tmp_time2));
+        countDownTimer2 = new CountDownTimer(waittime_q,tmp_time2) {
+            @Override
+            public void onTick(long l) {
+                // lは残り時間 // 最後max値の100になって終了
+                Log.d("DonutProgress2",Long.toString(l));
+                progressBar2.setProgress((int) (waittime_q - l) / 100);
+                //progressBar2.setProgress(progressBar2.getProgress()+1);
             }
-        }
-        return array;
+
+            @Override
+            public void onFinish() {
+                //時間経過。終了。
+                subfunc_timeattack7_finActivity();
+                Intent intent = new Intent(getApplication(),ResultActivity.class);
+                intent.putExtra("result",result);
+                startActivity(intent);
+            }
+        }.start();
     }
 
-    public void subfunc_timeattack3_makesound(ArrayList<Integer> tmp_check){
+    public void subfunc_timeattack3_makesound(){
         //乱数作成
         Random rnd = new Random();
         int sound_tmpnum, pic_tmpnum;
         //場所を決める//場所は一か所
         pic_tmpnum = 1;
-        /*****************************************
-        do {
-            pic_tmpnum = rnd.nextInt(5);
-        }while (outputted_pic[pic_tmpnum][0] != 0);
-         ******************************************/
         //音を決める
-        do {
-            sound_tmpnum = rnd.nextInt(12);
-        }while (tmp_check.contains(sound_tmpnum));
+        sound_tmpnum = rnd.nextInt(12);
         //配列に格納
         outputted_pic[pic_tmpnum][0] = 1;
         outputted_pic[pic_tmpnum][1] = sound_tmpnum;
         outputted_pic[pic_tmpnum][2] = 1;
         //画面に出力
-        ImageView imageView = (ImageView)findViewById(getResources().getIdentifier("image_timeattack_" + Integer.toString(pic_tmpnum + 1), "id", getPackageName()));
-        imageView.setImageResource(R.drawable.girl_play);
+        //ImageView imageView = (ImageView)findViewById(getResources().getIdentifier("image_timeattack_" + Integer.toString(pic_tmpnum + 1), "id", getPackageName()));
+        //imageView.setImageResource(R.drawable.girl_play);
+        subfunc_timeattack2_checktime();
         //音の出力
         outputted_pic[pic_tmpnum][3] = soundPool.play(soundIds[sound_tmpnum],1.0f,1.0f,0,10,1.0f);
     }
 
-    public void subfunc_timeattack4_timepass(){
-        for(int i = 0; i < outputted_pic.length; i++){
-            if(outputted_pic[i][2] > waitcount){
-                //正しい音が入力されなかった
-                //画面反映
-                ImageView imageView = (ImageView)findViewById(getResources().getIdentifier("image_timeattack_" + Integer.toString(i+1), "id", getPackageName()));
-                imageView.setImageResource(R.drawable.girl_ng);
-                //音を止める
-                soundPool.stop(outputted_pic[i][3]);
-                //配列初期化
-                Arrays.fill(outputted_pic[i],-1);
-            }
-        }
-    }
-
-    public boolean subfunc_timeattack5_fincheck(){
-        for(int i = 0; i < outputted_pic.length; i++){
-            if(outputted_pic[i][0] != -1){
-                //まだマスが閉じられていない
-                return false;
-            }
-        }
-        return true;
-    }
-
     public void subfunc_timeattack6_anscheck(int tmp){
+        //まずはタイマーを止める
+        countDownTimer2.cancel();
         if(outputted_pic[1][1] == tmp){
             //入力が正解
             //画面反映
@@ -319,11 +308,10 @@ public class TimeAttackActivity extends MainActivity implements View.OnClickList
     }
 
     public void subfunc_timeattack7_finActivity(){
-        mHandler.removeCallbacks(updatePicAndSound);
-        for(int i = 0; i < 5; i++){
-            if(outputted_pic[i][3] != -1){
-                soundPool.stop(outputted_pic[i][3]);
-            }
+        countDownTimer1.cancel();
+        countDownTimer2.cancel();
+        if(outputted_pic[1][3] != -1){
+            soundPool.stop(outputted_pic[1][3]);
         }
         load_check = false;
         soundPool.release();

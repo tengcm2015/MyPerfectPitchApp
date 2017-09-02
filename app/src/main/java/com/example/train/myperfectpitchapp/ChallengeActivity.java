@@ -228,7 +228,7 @@ public class ChallengeActivity extends MainActivity implements View.OnClickListe
                 }
             }
         };
-        mHandler.postDelayed(updatePicAndSound, 2000);
+        mHandler.postDelayed(updatePicAndSound, 500);
     }
 
     public ArrayList<Integer> subfunc_challenge2_check(){
@@ -238,6 +238,9 @@ public class ChallengeActivity extends MainActivity implements View.OnClickListe
                 //表示されている
                 array.add(outputted_pic[i][1]);
                 outputted_pic[i][2] += 1;
+            }else if(outputted_pic[i][0] == -1){
+                //埋まっている
+                array.add(outputted_pic[i][1]);
             }
         }
         return array;
